@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     // Set the cookie with the token
     await setAuthCookie(token);
 
-    return NextResponse.json({ user });
+    return NextResponse.json({ user, token });
   } catch (e) {
     console.error("Error in registration:", e);
     return NextResponse.json(

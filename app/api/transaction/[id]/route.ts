@@ -52,7 +52,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Params }) {
 export async function DELETE(req: NextRequest, { params }: { params: Params }) {
   try {
     await connectDB();
-    await Transaction.findByIdAndDelete(params.id);
+    await Transaction.findByIdAndDelete(params?.id);
     return NextResponse.json(
       { message: "Deleted transaction successfully" },
       { status: 200 }

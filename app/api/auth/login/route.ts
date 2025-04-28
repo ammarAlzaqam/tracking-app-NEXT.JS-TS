@@ -7,16 +7,16 @@ import connectDB from "@/app/libs/connectDB";
 import { setAuthCookie } from "@/app/libs/setAuthCookie";
 
 interface Body {
-  email: string;
+  username: string;
   password: string;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password }: Body = await req.json();
+    const { username, password }: Body = await req.json();
 
     await connectDB();
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ username });
     if (!user) {
       return NextResponse.json({ message: "User not found!" }, { status: 404 });
     }
@@ -30,11 +30,13 @@ export async function POST(req: NextRequest) {
     }
 
     const token = await createToken(user._id.toString());
+    user = user.toObject();
+    delete user.password;
 
     // set cookie with token
     await setAuthCookie(token);
-    
-    return NextResponse.json({ user });
+
+    return NextResponse.json({ user, token });
   } catch (e) {
     console.error("Error in registration:", e);
     return NextResponse.json(

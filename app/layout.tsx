@@ -1,5 +1,8 @@
+import React from "react";
 import type { Metadata } from "next";
-import logo from "@/public/assets/tracker-logo.png";
+import CacheProviderEmotion from "./utils/cacheProvider";
+import "./globals.css";
+import MuiThemeProvider from "./utils/themeProvider";
 
 export const metadata: Metadata = {
   title: "Expense Tracker",
@@ -10,9 +13,8 @@ export const metadata: Metadata = {
       name: "ammaralzaqam",
     },
   ],
-  icons: [{ rel: "icon", url: logo.src }],
+  icons: [{ rel: "icon", url: "assets/tracker-logo.png" }],
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CacheProviderEmotion><MuiThemeProvider>{children}</MuiThemeProvider></CacheProviderEmotion>
+      </body>
     </html>
   );
 }
