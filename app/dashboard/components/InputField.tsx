@@ -23,6 +23,16 @@ export default function InputField({
 }: InputFieldProps): React.ReactElement {
   return (
     <TextField
+      sx={{
+        input: {
+          color:
+            type === "amount"
+              ? formik.values.amount.startsWith("-")
+                ? "error.main"
+                : "success.main"
+              : "",
+        },
+      }}
       fullWidth
       id={type}
       name={type}
